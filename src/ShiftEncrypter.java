@@ -10,21 +10,29 @@ public class ShiftEncrypter implements Encrypter {
         byte[] newArray = new byte[byteArray.length];
         byte newByte;
         for(int i = 0; i < newArray.length; i++) {
-            int diff = 254 - byteArray[i];
+            int diff = 127 - byteArray[i];
             if(diff >= amount) {
                 newArray[i] = (byte) (byteArray[i] + amount);
             } else {
                 newArray[i] = (byte) (amount - diff - 1);
             }
-            System.out.println(newArray[i]);
         }
         return newArray;        //return shiftBytes(byteArray, bite -> (byte) (bite + amount));
     }
 
     @Override
     public byte[] decrypt(byte[] byteArray) {
-        //return shiftBytes(byteArray, bite -> (byte) (bite - amount));
-        return null;
+        byte[] newArray = new byte[byteArray.length];
+        byte newByte;
+        for(int i = 0; i < newArray.length; i++) {
+            int diff = byteArray[i];
+            if(diff >= amount) {
+                newArray[i] = (byte) (byteArray[i] - amount);
+            } else {
+                newArray[i] = (byte) (127 - (amount - diff) + 1);
+            }
+        }
+        return newArray;
     }
 
     private interface ByteChanger {
